@@ -130,12 +130,12 @@ public class HomeAccountController {
 			return ret;
 		}
 		RoomType roomType = roomTypeService.find(bookOrder.getRoomTypeId());
-		//预定成功后去修改该房型的预定数
+		
 		if(roomType != null){
 			roomType.setBookNum(roomType.getBookNum() + 1);
 			roomType.setAvilableNum(roomType.getAvilableNum() - 1);
 			roomTypeService.updateNum(roomType);
-			//如果可用的土地数为0，则设置该房型状态已满
+			
 			if(roomType.getAvilableNum() == 0){
 				roomType.setStatus(0);
 				roomTypeService.edit(roomType);

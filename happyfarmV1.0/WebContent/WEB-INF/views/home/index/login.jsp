@@ -39,12 +39,12 @@
 							   <span class="icon"></span>
 							</li>
 						 </ul>
-						 <div class="codes">
+						 <!-- <div class="codes">
 							<input class="blur" type="text" value="请输入验证码">
 							&lt;!&ndash;验证码&ndash;&gt;
 							<div></div>
 							<a class="change" href="javascript:codes();">换一张</a>
-						 </div>
+						 </div> -->
 					   <div class="codes" style="margin-top:25px;">
 							 <input id="vcode" maxlength="4" type="text" class="blur" placeholder="请输入验证码"/>
 							 <img id="cpacha-img" src="../system/get_cpacha?vl=4&w=173&h=33&type=accountLoginCpacha" onclick="changeVcode()" class="code" style="cursor:pointer;"/>

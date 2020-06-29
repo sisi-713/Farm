@@ -1,7 +1,5 @@
 package com.ischoolbar.programmer.service;
-/**
- * 房型service
- */
+
 import java.util.List;
 import java.util.Map;
 

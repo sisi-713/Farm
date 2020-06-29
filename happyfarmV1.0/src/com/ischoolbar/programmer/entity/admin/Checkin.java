@@ -4,25 +4,21 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-/**
- * 入住实体类
- * @author Administrator
- *
- */
+
 @Component
 public class Checkin {
-	private Long id;//入住id
-	private Long roomId;//土地id
-	private Long roomTypeId;//房型id
-	private Float checkinPrice;//入住价格
-	private String name;//入住者姓名
-	private String idCard;//身份证号码
-	private String mobile;//手机号
-	private int status;//状态：0：入住中，1：已结算离店
-	private String arriveDate;//入住日期
-	private String leaveDate;//离店日期
-	private Date createTime;//创建时间
-	private Long bookOrderId;//预定订单id，可为空
+	private Long id;
+	private Long roomId;
+	private Long roomTypeId;
+	private Float checkinPrice;
+	private String name;
+	private String idCard;
+	private String mobile;
+	private int status;
+	private String arriveDate;
+	private String leaveDate;
+	private Date createTime;
+	private Long bookOrderId;
 	private String remark;
 	public Long getId() {
 		return id;

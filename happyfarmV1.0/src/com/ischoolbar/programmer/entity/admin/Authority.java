@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 public class Authority {
 	private Long id;
 	
-	private Long roleId;//角色id
+	private Long roleId;
 	
-	private Long menuId;//菜单id
+	private Long menuId;
 
 	public Long getId() {
 		return id;

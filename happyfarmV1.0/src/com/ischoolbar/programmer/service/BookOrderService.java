@@ -1,7 +1,5 @@
 package com.ischoolbar.programmer.service;
-/**
- * 预定订单service
- */
+
 import java.util.List;
 import java.util.Map;
 

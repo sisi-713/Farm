@@ -7,11 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.ischoolbar.programmer.entity.admin.Floor;
 
-/**
- * 种植service
- * @author Administrator
- *
- */
 @Service
 public interface FloorService {
 	public int add(Floor floor);

@@ -9,18 +9,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RoomType {
-	private Long id;//土地类型id
-	private String name;//土地名称
-	private String photo;//土地类型图片
-	private Float price;//房型价格
-	private Integer liveNum;//可住人数
-	private Integer bedNum;//床位数
-	private Integer roomNum;//土地数
-	private Integer avilableNum;//可住或可预定土地数
-	private Integer bookNum;//预定数
-	private Integer livedNum;//已经入住数
-	private int status;//房型状态，0：房型已满,1:可预订可入住
-	private String remark;//房型备注
+	private Long id;
+	private String name;
+	private String photo;
+	private Float price;
+	private Integer liveNum;
+	private Integer bedNum;
+	private Integer roomNum;
+	private Integer avilableNum;
+	private Integer bookNum;
+	private Integer livedNum;
+	private int status;
+	private String remark;
 
 	public Long getId() {
 		return id;

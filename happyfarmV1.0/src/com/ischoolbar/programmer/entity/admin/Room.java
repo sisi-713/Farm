@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Room {
-	private Long id;//土地id
-	private String photo;//土地图片
-	private String sn;//土地编号
-	private Long roomTypeId;//房型id
-	private Long floorId;//所属种植id
-	private int status;//房型状态，0：可入住,1:已入住,2:打扫中
-	private String remark;//房型备注
+	private Long id;
+	private String photo;
+	private String sn;
+	private Long roomTypeId;
+	private Long floorId;
+	private int status;
+	private String remark;
 	public Long getId() {
 		return id;
 	}

@@ -25,11 +25,7 @@ import com.ischoolbar.programmer.service.RoomTypeService;
 import com.ischoolbar.programmer.service.admin.CheckinService;
 import com.ischoolbar.programmer.service.admin.RoomService;
 
-/**
- * 入住管理后台控制器
- * @author Administrator
- *
- */
+
 @RequestMapping("/admin/checkin")
 @Controller
 public class CheckinController {
@@ -43,11 +39,7 @@ public class CheckinController {
 	@Autowired
 	private CheckinService checkinService;
 	
-	/**
-	 * 入住管理列表页面
-	 * @param model
-	 * @return
-	 */
+	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public ModelAndView list(ModelAndView model){
 		model.addObject("roomTypeList", roomTypeService.findAll());
@@ -56,11 +48,7 @@ public class CheckinController {
 		return model;
 	}
 	
-	/**
-	 * 入住信息添加操作
-	 * @param checkin
-	 * @return
-	 */
+
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> add(Checkin checkin,
@@ -69,7 +57,7 @@ public class CheckinController {
 		Map<String, String> ret = new HashMap<String, String>();
 		if(checkin == null){
 			ret.put("type", "error");
-			ret.put("msg", "请填写正确的入住信息!");
+			ret.put("msg", "请填写正确的租借信息!");
 			return ret;
 		}
 		if(checkin.getRoomId() == null){
@@ -79,17 +67,17 @@ public class CheckinController {
 		}
 		if(checkin.getRoomTypeId() == null){
 			ret.put("type", "error");
-			ret.put("msg", "房型不能为空!");
+			ret.put("msg", "土地不能为空!");
 			return ret;
 		}
 		if(StringUtils.isEmpty(checkin.getName())){
 			ret.put("type", "error");
-			ret.put("msg", "入住联系人名称不能为空!");
+			ret.put("msg", "租借联系人名称不能为空!");
 			return ret;
 		}
 		if(StringUtils.isEmpty(checkin.getMobile())){
 			ret.put("type", "error");
-			ret.put("msg", "入住联系人手机号不能为空!");
+			ret.put("msg", "租借联系人手机号不能为空!");
 			return ret;
 		}
 		if(StringUtils.isEmpty(checkin.getIdCard())){
@@ -99,12 +87,12 @@ public class CheckinController {
 		}
 		if(StringUtils.isEmpty(checkin.getArriveDate())){
 			ret.put("type", "error");
-			ret.put("msg", "到达时间不能为空!");
+			ret.put("msg", "租借时间不能为空!");
 			return ret;
 		}
 		if(StringUtils.isEmpty(checkin.getLeaveDate())){
 			ret.put("type", "error");
-			ret.put("msg", "离店时间不能为空!");
+			ret.put("msg", "退租时间不能为空!");
 			return ret;
 		}
 		checkin.setCreateTime(new Date());
@@ -116,19 +104,19 @@ public class CheckinController {
 		RoomType roomType = roomTypeService.find(checkin.getRoomTypeId());
 		
 		if(bookOrderId != null){
-			//从预定来的入住单(入住既可以是直接入住也可以是已经预定的人来入住)
+			
 			BookOrder bookOrder = bookOrderService.find(bookOrderId);
 			bookOrder.setStatus(1);
 			bookOrderService.edit(bookOrder);
-			//roomType.setBookNum(roomType.getBookNum() - 1);//预定数减1
+			
 		}else{
 			roomType.setAvilableNum(roomType.getAvilableNum() - 1);
 		}
-		//入住成功后去修改该房型的预定数
+		
 		if(roomType != null){
-			roomType.setLivedNum(roomType.getLivedNum() + 1);//入住数加1
+			roomType.setLivedNum(roomType.getLivedNum() + 1);
 			roomTypeService.updateNum(roomType);
-			//如果可用的土地数为0，则设置该房型状态已满
+			
 			if(roomType.getAvilableNum() == 0){
 				roomType.setStatus(0);
 				roomTypeService.edit(roomType);
@@ -136,7 +124,7 @@ public class CheckinController {
 		}
 		Room room = roomService.find(checkin.getRoomId());
 		if(room != null){
-			//要把土地状态设置为已入住
+			
 			room.setStatus(1);
 			roomService.edit(room);
 		}
@@ -145,11 +133,7 @@ public class CheckinController {
 		return ret;
 	}
 	
-	/**
-	 * 入住信息编辑操作
-	 * @param account
-	 * @return
-	 */
+	
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> edit(Checkin checkin,
@@ -158,7 +142,7 @@ public class CheckinController {
 		Map<String, String> ret = new HashMap<String, String>();
 		if(checkin == null){
 			ret.put("type", "error");
-			ret.put("msg", "请填写正确的入住信息!");
+			ret.put("msg", "请填写正确的租借信息!");
 			return ret;
 		}
 		if(checkin.getRoomId() == null){
@@ -168,17 +152,17 @@ public class CheckinController {
 		}
 		if(checkin.getRoomTypeId() == null){
 			ret.put("type", "error");
-			ret.put("msg", "房型不能为空!");
+			ret.put("msg", "土地类型不能为空!");
 			return ret;
 		}
 		if(StringUtils.isEmpty(checkin.getName())){
 			ret.put("type", "error");
-			ret.put("msg", "入住联系人名称不能为空!");
+			ret.put("msg", "租借联系人名称不能为空!");
 			return ret;
 		}
 		if(StringUtils.isEmpty(checkin.getMobile())){
 			ret.put("type", "error");
-			ret.put("msg", "入住联系人手机号不能为空!");
+			ret.put("msg", "租借联系人手机号不能为空!");
 			return ret;
 		}
 		if(StringUtils.isEmpty(checkin.getIdCard())){
@@ -188,18 +172,18 @@ public class CheckinController {
 		}
 		if(StringUtils.isEmpty(checkin.getArriveDate())){
 			ret.put("type", "error");
-			ret.put("msg", "到达时间不能为空!");
+			ret.put("msg", "租借时间不能为空!");
 			return ret;
 		}
 		if(StringUtils.isEmpty(checkin.getLeaveDate())){
 			ret.put("type", "error");
-			ret.put("msg", "离店时间不能为空!");
+			ret.put("msg", "退租时间不能为空!");
 			return ret;
 		}
 		Checkin existCheckin = checkinService.find(checkin.getId());
 		if(existCheckin == null){
 			ret.put("type", "error");
-			ret.put("msg", "请选择正确的入住信息进行编辑!");
+			ret.put("msg", "请选择正确的租借信息进行编辑!");
 			return ret;
 		}
 		if(checkinService.edit(checkin) <= 0){
@@ -207,14 +191,12 @@ public class CheckinController {
 			ret.put("msg", "编辑失败，请联系管理员!");
 			return ret;
 		}
-		//编辑成功之后：1：判断房型是否发生变化，2：判断土地是否发生变化，3：判断是否是从预定订单来的信息
-		//首先判断是否是从预定来的入住信息
+		
 		RoomType oldRoomType = roomTypeService.find(existCheckin.getRoomTypeId());
 		RoomType newRoomType = roomTypeService.find(checkin.getRoomTypeId());
 		
-		//房型入住数不收预定订单的影响
+		
 		if(oldRoomType.getId().longValue() != newRoomType.getId().longValue()){
-			//说明房型发生了变化，原来的房型入住数恢复，新的房型入住数增加
 			oldRoomType.setLivedNum(oldRoomType.getLivedNum() - 1);
 			newRoomType.setLivedNum(newRoomType.getLivedNum() + 1);
 			if(bookOrderId == null){
@@ -222,46 +204,7 @@ public class CheckinController {
 				newRoomType.setAvilableNum(newRoomType.getAvilableNum() - 1);
 			}
 		}
-		/**
-		if(bookOrderId == null){
-			//表示不是从预定订单来的，此时需判断原来的入住信息是否来源于预定
-			if(existCheckin.getBookOrderId() == null){
-				oldRoomType.setAvilableNum(oldRoomType.getAvilableNum() + 1);
-				newRoomType.setAvilableNum(newRoomType.getAvilableNum() - 1);
-			}
-			if(existCheckin.getBookOrderId() != null){
-				//表示原来的入住信息来源于预定，但是新的入住信息不是来源于预定,需恢复原来的预定状态
-				BookOrder oldBookOrder = bookOrderService.find(existCheckin.getBookOrderId());
-				oldBookOrder.setStatus(0);
-				bookOrderService.edit(oldBookOrder);
-				oldRoomType.setBookNum(oldRoomType.getBookNum() + 1);
-			}
-		}
-		//表示此时的订单是来源于预定
-		if(bookOrderId != null){
-			//表示是从预定订单来的，此时需判断原来的入住信息是否来源于预定
-			if(existCheckin.getBookOrderId() != null){
-				//表示原来的入住信息来源于预定，但是新的入住信息不是来源于预定,需恢复原来的预定状态
-				BookOrder oldBookOrder = bookOrderService.find(existCheckin.getBookOrderId());
-				if(bookOrderId.longValue() != oldBookOrder.getId().longValue()){
-					oldBookOrder.setStatus(0);
-					bookOrderService.edit(oldBookOrder);
-					//oldRoomType.setBookNum(oldRoomType.getBookNum() + 1);
-				}
-			}
-			if(oldRoomType.getId().longValue() != newRoomType.getId().longValue()){
-				newRoomType.setBookNum(newRoomType.getBookNum() - 1);
-				
-				if(existCheckin.getBookOrderId() == null){
-					oldRoomType.setAvilableNum(oldRoomType.getAvilableNum() + 1);
-				}else{
-					oldRoomType.setBookNum(oldRoomType.getBookNum() + 1);
-				}
-			}
-			BookOrder newBookOrder = bookOrderService.find(bookOrderId);
-			newBookOrder.setStatus(1);
-			bookOrderService.edit(newBookOrder);
-		}**/
+		
 		roomTypeService.updateNum(newRoomType);
 		roomTypeService.updateNum(oldRoomType);
 		//判断土地是否发生变化
@@ -269,8 +212,8 @@ public class CheckinController {
 			//表示土地发生了变化
 			Room oldRoom = roomService.find(existCheckin.getRoomId());
 			Room newRoom = roomService.find(checkin.getRoomId());
-			oldRoom.setStatus(0);//原来的土地可入住
-			newRoom.setStatus(1);//现在的土地已入住
+			oldRoom.setStatus(0);//原来的土地可租借
+			newRoom.setStatus(1);//现在的土地已租借
 			roomService.edit(newRoom);
 			roomService.edit(oldRoom);
 		}
@@ -279,12 +222,7 @@ public class CheckinController {
 		return ret;
 	}
 	
-	/**
-	 * 分页查询入住信息
-	 * @param name
-	 * @param page
-	 * @return
-	 */
+	
 	@RequestMapping(value="/list",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> list(
@@ -338,13 +276,13 @@ public class CheckinController {
 			ret.put("msg", "退租失败，请联系管理员!");
 			return ret;
 		}
-		//首先操作土地状态
+		
 		Room room = roomService.find(checkin.getRoomId());
 		if(room != null){
 			room.setStatus(2);
 			roomService.edit(room);
 		}
-		//其次修改房型可用数、入住数、状态
+		
 		RoomType roomType = roomTypeService.find(checkin.getRoomTypeId());
 		if(roomType != null){
 			roomType.setAvilableNum(roomType.getAvilableNum() + 1);
@@ -361,7 +299,7 @@ public class CheckinController {
 			roomTypeService.updateNum(roomType);
 			roomTypeService.edit(roomType);
 		}
-		//判断是否来自预定
+		
 		if(checkin.getBookOrderId() != null){
 			BookOrder bookOrder = bookOrderService.find(checkin.getBookOrderId());
 			bookOrder.setStatus(2);
