@@ -10,14 +10,14 @@
         </div>
         <div class="wu-toolbar-search">
             <label>土地编号:</label><input id="search-sn" class="wu-text" style="width:100px">
-            <label>土地类型:</label>
+            <label>土地所属类型:</label>
             <select id="search-roomType" class="easyui-combobox" panelHeight="auto" style="width:120px">
             	<option value="-1">全部</option>
             	<c:forEach items="${roomTypeList }" var="roomType">
             	<option value="${roomType.id }">${roomType.name }</option>
             	</c:forEach>
             </select>
-            <label>土地面积:</label>
+            <label>土地:</label>
             <select id="search-floor" class="easyui-combobox" panelHeight="auto" style="width:120px">
             	<option value="-1">全部</option>
             	<c:forEach items="${floorList }" var="floor">
@@ -57,7 +57,7 @@
                 <td><input type="text" id="add-sn" name="sn" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写土地编号'" /></td>
             </tr>
             <tr>
-                <td align="right">土地类型:</td>
+                <td align="right">土地所属类型:</td>
                 <td>
 	                <select id="add-roomTypeId" name="roomTypeId" class="easyui-combobox" panelHeight="auto" style="width:268px">
 		            	<c:forEach items="${roomTypeList }" var="roomType">
@@ -67,7 +67,7 @@
                 </td>
             </tr>
             <tr>
-                <td align="right">土地总面积</td>
+                <td align="right">土地</td>
                 <td>
 	                <select id="add-liveNum" name="liveNum" class="wu-text easyui-validatebox" panelHeight="auto" style="width:268px">
 		            	<c:forEach items="${floorList }" var="floor">
@@ -114,7 +114,7 @@
                 <td><input type="text" id="edit-sn" name="sn" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写土地编号'" /></td>
             </tr>
             <tr>
-                <td align="right">土地类型:</td>
+                <td align="right">土地所属类型:</td>
                 <td>
 	                <select id="edit-roomTypeId" name="roomTypeId" class="easyui-combobox" panelHeight="auto" style="width:268px">
 		            	<c:forEach items="${roomTypeList }" var="roomType">
@@ -124,7 +124,7 @@
                 </td>
             </tr>
             <tr>
-                <td align="right">土地面积:</td>
+                <td align="right">土地:</td>
                 <td>
 	                <select id="edit-floorId" name="floorId" class="easyui-combobox" panelHeight="auto" style="width:268px">
 		            	<c:forEach items="${floorList }" var="floor">
@@ -399,14 +399,14 @@ function uploadPhoto(){
 				return img;
 			}},
 			{ field:'sn',title:'土地编号',width:100,sortable:true},
-			{ field:'roomTypeId',title:'土地类型',width:100,formatter:function(value,row,index){
+			{ field:'roomTypeId',title:'土地所属类型',width:100,formatter:function(value,row,index){
 				var roomTypeList = $("#search-roomType").combobox('getData');
 				for(var i=0;i<roomTypeList.length;i++){
 					if(roomTypeList[i].value == value)return roomTypeList[i].text;
 				}
 				return value;
 			}},
-			{ field:'floorId',title:'土地面积',width:100,formatter:function(value,row,index){
+			{ field:'floorId',title:'土地',width:100,formatter:function(value,row,index){
 				var floorList = $("#search-floor").combobox('getData');
 				for(var i=0;i<floorList.length;i++){
 					if(floorList[i].value == value)return floorList[i].text;

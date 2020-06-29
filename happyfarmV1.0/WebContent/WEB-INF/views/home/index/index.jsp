@@ -40,15 +40,18 @@
   <div id="due_menu">
     <!--关于-->
     
-    <!--客房-->
+    
     <div id="guest_rooms">
-      <p class="booking_tab"><span></span>土地列表</p>
+      <p class="booking_tab"><span></span><a href="#land">土地列表</a></p>
+       <p class="booking_tab"><span></span><a href="#monitor">实时监控</a></p>
+       
       <div class="chioce">
         <input type="text" placeholder="关键字" value="${kw }" id="kw"/>
         <input type="button" value="搜索" id="search-btn"/>
       </div>
       <form style="display:none;" action="index" method="get" id="search-form"><input type="hidden" name="name" id="search-name"></form>
       <!--列表-->
+       <div class="land" style="display: block;">
       <table id="pro_list" >
         <thead>
           <tr>
@@ -98,8 +101,9 @@
       <!--  -列表菜单 -->
       <div></div>
     </div>
+    
   </div>
-
+ 
 </section>
 <%@include file="../common/footer.jsp"%>
 <script src="../resources/home/js/jquery-1.11.3.js"></script>

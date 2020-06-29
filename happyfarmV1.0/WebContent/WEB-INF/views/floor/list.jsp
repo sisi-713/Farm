@@ -21,14 +21,22 @@
 <div id="add-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:420px; padding:10px;">
 	<form id="add-form" method="post">
         <table>
+        	<tr>
+                <td width="60" align="right">视频预览:</td>
+                <td valign="middle">
+                	<img id="preview-photo" style="float:left;" src="/HotelSSM/resources/admin/easyui/images/user_photo.jpg" width="100px">
+                	<a style="float:left;margin-top:40px;" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-upload" onclick="uploadPhoto()" plain="true">上传视频</a>
+                </td>
+            </tr>
+             <tr>
+                <td width="60" align="right">视频图片:</td>
+                <td><input type="text" id="add-photo" name="photo" value="/HotelSSM/resources/admin/easyui/images/user_photo.jpg" readonly="readonly" class="wu-text " /></td>
+            </tr>
             <tr>
                 <td align="right">土地:</td>
                 <td><input type="text" id="add-name" name="name" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写种植名称'" /></td>
             </tr>
-            <tr>
-                <td align="right">种植视频:</td>
-                <td><textarea id="add-remark" name="remark" rows="6" class="wu-textarea" style="width:260px"></textarea></td>
-            </tr>
+             
         </table>
     </form>
 </div>
@@ -37,22 +45,79 @@
 	<form id="edit-form" method="post">
         <input type="hidden" name="id" id="edit-id">
         <table>
+        	<tr>
+                <td width="60" align="right">视频预览:</td>
+                <td valign="middle">
+                	<img id="edit-preview-photo" style="float:left;" src="/HotelSSM/resources/admin/easyui/images/user_photo.jpg" width="100px">
+                	<a style="float:left;margin-top:40px;" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-upload" onclick="uploadPhoto()" plain="true">上传视频</a>
+                </td>
+            </tr>
+            <tr>
+                <td width="60" align="right">土地视频:</td>
+                <td><input type="text" id="edit-photo" name="photo" value="/HotelSSM/resources/admin/easyui/images/user_photo.jpg" readonly="readonly" class="wu-text " /></td>
+            </tr>
            <tr>
                 <td align="right">土地:</td>
                 <td><input type="text" id="edit-name" name="name" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写种植名称'" /></td>
             </tr>
-            <tr>
-                <td align="right">种植视频:</td>
-                <td><textarea id="edit-remark" name="remark" rows="6" class="wu-textarea" style="width:260px"></textarea></td>
-            </tr>
+             
         </table>
     </form>
 </div>
+<div id="process-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-upload',title:'正在上传视频'" style="width:450px; padding:10px;">
+<div id="p" class="easyui-progressbar" style="width:400px;" data-options="text:'正在上传中...'"></div>
+</div>
+<input type="file" id="photo-file" style="display:none;" onchange="upload()">
 <%@include file="../common/footer.jsp"%>
 
 <!-- End of easyui-dialog -->
 <script type="text/javascript">
-	
+
+function start(){
+	var value = $('#p').progressbar('getValue');
+	if (value < 100){
+		value += Math.floor(Math.random() * 10);
+		$('#p').progressbar('setValue', value);
+	}else{
+		$('#p').progressbar('setValue',0)
+	}
+};
+function upload(){
+	if($("#photo-file").val() == '')return;
+	var formData = new FormData();
+	formData.append('photo',document.getElementById('photo-file').files[0]);
+	$("#process-dialog").dialog('open');
+	var interval = setInterval(start,200);
+	$.ajax({
+		url:'../user/upload_photo',
+		type:'post',
+		data:formData,
+		contentType:false,
+		processData:false,
+		success:function(data){
+			clearInterval(interval);
+			$("#process-dialog").dialog('close');
+			if(data.type == 'success'){
+				$("#preview-photo").attr('src',data.filepath);
+				$("#add-photo").val(data.filepath);
+				$("#edit-preview-photo").attr('src',data.filepath);
+				$("#edit-photo").val(data.filepath);
+			}else{
+				$.messager.alert("消息提醒",data.msg,"warning");
+			}
+		},
+		error:function(data){
+			clearInterval(interval);
+			$("#process-dialog").dialog('close');
+			$.messager.alert("消息提醒","上传失败!","warning");
+		}
+	});
+}
+
+function uploadPhoto(){
+	$("#photo-file").click();
+
+}
 	
 	
 	/**
@@ -171,7 +236,9 @@
             	//$("#add-form input").val('');
             	$("#edit-id").val(item.id);
             	$("#edit-name").val(item.name);
-            	$("#edit-remark").val(item.remark);
+            	$("#edit-preview-photo").attr('src',item.photo);
+            	$("#edit-photo").val(item.photo);
+            	//$("#edit-remark").val(item.remark);
             }
         });
 	}
@@ -226,8 +293,12 @@
 		fit:true,
 		columns:[[
 			{ field:'chk',checkbox:true},
+			{ field:'photo',title:'种植视频',width:100,align:'center',formatter:function(value,row,index){
+				var img = '<img src="'+value+'" width="50px" style="margin-top:5px;" />';
+				return img;
+			}},
 			{ field:'name',title:'土地',width:100,sortable:true},
-			{ field:'remark',title:'种植视频',width:200},
+			
 		]]
 	});
 </script>

@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <td align="right">土地数:</td>
-                <td><input type="text" id="add-bedNum" name="bedNum" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写土地类型床位数'" /></td>
+                <td><input type="text" id="add-bedNum" name="bedNum" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写土地类型数'" /></td>
             </tr>
             <tr>
                 <td align="right">可用土地数:</td>

@@ -27,10 +27,10 @@
             
             </div>
             <ul class="hotel_detail">
-            <li><span>预定数:</span>${roomType.bookNum }</li>
-            <li><span>价格:</span>${roomType.price }</li>
-            <li><span>土地面积:</span>${roomType.bedNum }</li>
-            <li><span>可租土地数:</span>${roomType.liveNum }人</li>
+            <li><span>已预订:</span>${roomType.bookNum }人</li>
+            <li><span>价格:</span>${roomType.price }元/块</li>
+            <li><span>可租土地数:</span>${roomType.bedNum }块</li>
+            <li><span>土地面积:</span>${roomType.liveNum }m²</li>
             <li><span>其他:</span>${roomType.remark }</li>
             </ul>
         </div>
@@ -58,7 +58,7 @@
                     </div>
                 </li>
                 <li>
-                    <h3>租借信息</h3>
+                    <h3>租借人信息</h3>
 
                     <div class="info_group">
                         <label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label><input type="text" name="name" id="name" value="${account.name}"/><span class="msg"></span>
